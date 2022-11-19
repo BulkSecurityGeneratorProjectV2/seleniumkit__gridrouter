@@ -7,6 +7,7 @@ import ru.qatools.gridrouter.config.Browsers;
 import javax.xml.bind.JAXB;
 import java.io.File;
 import java.io.StringWriter;
+import java.nio.file.Files;
 
 import static java.lang.ClassLoader.getSystemResource;
 import static ru.qatools.gridrouter.utils.GridRouterRule.USER_1;
@@ -48,7 +49,7 @@ public final class QuotaUtils {
             StringWriter xml = new StringWriter();
             JAXB.marshal(browsers, xml);
             final File fileToWrite = getQuotaFile(user);
-            final File tmpFile = File.createTempFile(user, "xml");
+            final File tmpFile = Files.createTempFile(user, "xml").toFile();
             FileUtils.write(tmpFile, xml.toString());
             FileUtils.copyFile(tmpFile, fileToWrite);
             FileUtils.deleteQuietly(tmpFile);
